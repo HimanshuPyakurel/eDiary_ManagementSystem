@@ -1,0 +1,86 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block main %}
+<br><br><br>
+<!--page-wrapper-->
+<div class="page-wrapper">
+    <!--page-content-wrapper-->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="card radius-15 overflow-hidden">
+                        <a href="{% url 'manageCategory' %}">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div>
+                                        <p class="mb-0 font-weight-bold">Total Category</p>
+                                        <h2 class="mb-0">{{totalcategory}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card radius-15 overflow-hidden">
+                        <a href="{% url 'manageNotes' %}">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div>
+                                        <p class="mb-0 font-weight-bold">Total Notes</p>
+                                        <h2 class="mb-0">{{totalnotes}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <!--end row-->
+
+
+            <div class="row">
+                <div class="card radius-15 col-xl-12">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4 class="mb-0">Recent Add Notes</h4>
+                        </div>
+                        <hr/>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Notes Title</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Creation Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for i in notes %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{i.noteTitle}}</td>
+                                    <td>{{i.category.categoryName}}</td>
+                                    <td>{{i.CreationDate}}</td>
+                                    <td><a href="{% url 'viewNotes' i.id %}" class="btn btn-success">View</a> |
+                                        <a href="{% url 'deleteNotes' i.id %}" onclick="return confirm('Are you sure to Delete')"
+                                                class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
