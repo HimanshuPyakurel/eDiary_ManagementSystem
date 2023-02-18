@@ -1,0 +1,96 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block main %}
+<div class="page-wrapper">
+    <!--page-content-wrapper-->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">Category</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="{% url 'user_home' %}"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Manage Category</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+
+            <div class="row">
+                <div class="radius-15 col-xl-5 mx-auto">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4 class="mb-0">Add Category</h4>
+                            </div>
+                            <hr>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">Category Name</label>
+                                    <input type="text" name="categoryName" placeholder="Enter Category Name"
+                                           class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary px-5">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card radius-15 col-xl-7">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4 class="mb-0">Category List</h4>
+                        </div>
+                        <hr/>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Creation Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for i in category %}
+                                <tr>
+                                    <th scope="row">{{forloop.counter}}</th>
+                                    <td>{{i.categoryName}}</td>
+                                    <td>{{i.CreationDate}}</td>
+                                    <td><a href="{% url 'editCategory' i.id %}" class="btn btn-info">Edit</a> |
+                                    <a href="{% url 'deleteCategory' i.id %}" onclick="return confirm('Are you sure to Delete')" class="btn btn-danger">Delete</a></td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('New Category has been Added.');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert('Something went Wrong. Try Again...');
+</script>
+{% endif %}
+
+{% endblock %}
