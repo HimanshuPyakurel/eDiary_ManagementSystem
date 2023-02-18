@@ -1,0 +1,89 @@
+{% extends 'userbase.html' %}
+{% load static %}
+{% block main %}
+<div class="page-wrapper">
+    <!--page-content-wrapper-->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">Profile</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="{% url 'user_home' %}"><i
+                                    class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Update Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+
+            <div class="row">
+                <div class="radius-15 col-xl-12 mx-auto">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4 class="mb-0">Update Profile</h4>
+                            </div>
+                            <hr>
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" name="firstName" value="{{signup.user.first_name}}" class="form-control">
+                                    </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" name="lastName" value="{{signup.user.last_name}}" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Mobile Number</label>
+                                        <input type="text" name="mobileNumber" value="{{signup.mobileNumber}}" maxlength="10" class="form-control" >
+                                    </div>
+
+                                    <div class="mb-3 col-md-6">
+                                        <label class="form-label">Email Id</label>
+                                        <input type="text" class="form-control" value="{{signup.user.username}}" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                        <label class="form-label">Registration Date</label>
+                                        <input type="text" class="form-control" value="{{signup.regDate}}" readonly>
+                                    </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary px-5">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error == "no" %}
+<script>
+    alert('Profile has been Updated.');
+    window.location=('{% url 'user_home' %}');
+</script>
+{% endif %}
+
+{% if error == "yes" %}
+<script>
+    alert('Something went Wrong. Try Again...');
+
+</script>
+{% endif %}
+
+{% endblock %}
